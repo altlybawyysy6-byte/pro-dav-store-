@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Dev Store - بروديف ستور</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #151a23;
+            --accent-purple: #7289da;
+            --accent-cyan: #00d2ff;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --gold: #fbbf24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(21, 26, 35, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .admin-nav-btn {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--gold);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            color: var(--gold) !important;
+            font-weight: 700 !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 1rem 2rem;
+            background: radial-gradient(circle at top, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-right: 4px solid var(--gold);
+            padding-right: 0.75rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .product-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--gold), #d97706);
+            color: black;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Admin Stats Dashboard Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0.3rem 0;
+            color: #fff;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Forms Section */
+        .forms-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            color: var(--gold);
+            cursor: pointer;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Notifications & Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--gold);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class="fa-solid fa-code"></i> Pro Dev Store</div>
+        <ul class="nav-links">
+            <li><a href="#services">الخدمات</a></li>
+            <li><a href="#order">طلب خدمة</a></li>
+            <li><a href="#review">الملاحظات والتقييمات</a></li>
+            <li><a onclick="openAdminModal()" class="admin-nav-btn"><i class="fa-solid fa-user-shield"></i> لوحة الأدمن</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <h1>مرحباً بك في Pro Dev Store</h1>
+        <p>نقدم لك أفضل الحلول البرمجية وتصميم المواقع وتطوير سيرفرات ديسكورد بأعلى جودة وإمكانيات بالدفع عبر الكردت فقط.</p>
+    </section>
+
+    <div class="container">
+        
+        <!-- Services Grid -->
+        <h2 class="section-title" id="services"><i class="fa-solid fa-layer-group"></i> خدماتنا المميزة</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div>
+                    <div class="product-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3 class="product-title">تطوير موقع إلكتروني</h3>
+                    <p class="product-desc">تصميم وتطوير موقع متكامل ومتجاوب مع جميع الشاشات بأحدث التقنيات.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">حسب الطلب</span>
+                    <button class="btn" onclick="selectService('تطوير موقع إلكتروني')">طلب الآن</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div class="product-icon"><i class="fa-brands fa-discord"></i></div>
+                    <h3 class="product-title">إعداد سيرفر ديسكورد</h3>
+                    <p class="product-desc">ترتيب الرومات، الرتب، ربط البوتات، وتأمين السيرفر بشكل احترافي.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">حسب الطلب</span>
+                    <button class="btn" onclick="selectService('إعداد سيرفر ديسكورد')">طلب الآن</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div class="product-icon"><i class="fa-solid fa-robot"></i></div>
+                    <h3 class="product-title">برمجة بوت ديسكورد</h3>
+                    <p class="product-desc">بوتات مخصصة (نظام تكت، حماية، ألعاب، إدارية) خاصة بسيرفرك.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">حسب الطلب</span>
+                    <button class="btn" onclick="selectService('برمجة بوت ديسكورد')">طلب الآن</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forms Section -->
+        <div class="forms-wrapper">
+            
+            <!-- Order Form -->
+            <div class="form-card" id="order">
+                <h2 class="section-title"><i class="fa-solid fa-cart-shopping"></i> تقديم طلب جديد</h2>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="orderName">الاسم أو يوزر الديسكورد</label>
+                        <input type="text" id="orderName" placeholder="مثال: @user_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderService">الخدمة المطلوبة</label>
+                        <select id="orderService" required>
+                            <option value="" disabled selected>اختر الخدمة...</option>
+                            <option value="تطوير موقع إلكتروني">تطوير موقع إلكتروني</option>
+                            <option value="إعداد سيرفر ديسكورد">إعداد سيرفر ديسكورد</option>
+                            <option value="برمجة بوت ديسكورد">برمجة بوت ديسكورد</option>
+                            <option value="خدمة أخرى">خدمة أخرى (تحديد بالوصف)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderDetails">تفاصيل الطلب</label>
+                        <textarea id="orderDetails" rows="4" placeholder="اكتب تفاصيل ومواصفات طلبك هنا..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">إرسال الطلب</button>
+                    <div id="orderStatus" class="alert"></div>
+                </form>
+            </div>
+
+            <!-- Review Form -->
+            <div class="form-card" id="review">
+                <h2 class="section-title"><i class="fa-solid fa-star"></i> الملاحظات والتقييم</h2>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewName">الاسم أو يوزر الديسكورد</label>
+                        <input type="text" id="reviewName" placeholder="مثال: @user_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>التقييم</label>
+                        <div class="rating-stars" id="starContainer">
+                            <i class="fa-star fa-regular" data-value="1"></i>
+                            <i class="fa-star fa-regular" data-value="2"></i>
+                            <i class="fa-star fa-regular" data-value="3"></i>
+                            <i class="fa-star fa-regular" data-value="4"></i>
+                            <i class="fa-star fa-regular" data-value="5"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewComment">الملاحظات أو التقييم</label>
+                        <textarea id="reviewComment" rows="4" placeholder="شاركنا رأيك أو ملاحظاتك حول خدماتنا..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">إرسال التقييم</button>
+                    <div id="reviewStatus" class="alert"></div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Section Admin Dashboard (تظهر بعد إدخال كود السر) -->
+        <div id="adminPanel" style="display: none; margin-top: 4rem;">
+            <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> لوحة إحصائيات الإدارة (الأدمن)</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div class="stat-value" id="visitCount">0</div>
+                    <div class="stat-label">عدد زيارات الموقع</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <div class="stat-value" id="orderCount">0</div>
+                    <div class="stat-label">إجمالي الطلبات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-comments"></i></div>
+                    <div class="stat-value" id="reviewCount">0</div>
+                    <div class="stat-label">إجمالي التقييمات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-coins"></i></div>
+                    <div class="stat-value" id="creditsCount">0</div>
+                    <div class="stat-label">كمية الكردت المحصلة</div>
+                </div>
+            </div>
+
+            <div class="form-card" style="max-width: 500px; margin: 0 auto;">
+                <h3><i class="fa-solid fa-pen-to-square"></i> تعديل إجمالي الكردت</h3>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>أدخل كمية الكردت الجديدة</label>
+                    <input type="number" id="newCreditInput" placeholder="مثال: 500000">
+                </div>
+                <button class="btn" style="width: 100%;" onclick="updateCredits()">تحديث المبلغ</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Login Admin -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1rem; color: var(--gold); text-align: center;"><i class="fa-solid fa-lock"></i> كلمة السر للأدمن</h3>
+            <div class="form-group">
+                <input type="password" id="adminPasswordInput" placeholder="أدخل رمز الدخول هنا">
+            </div>
+            <button class="btn" style="width: 100%;" onclick="verifyAdmin()">دخول</button>
+            <button class="btn" style="width: 100%; margin-top: 0.5rem; background: transparent; color: #fff; border: 1px solid var(--border-color);" onclick="closeAdminModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Pro Dev Store. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        /* ------------ روابط الـ WEBHOOK المدمجة ------------ */
+        const ORDER_WEBHOOK_URL = "https://discord.com/api/webhooks/1548956427828207628/QjlWqAadAMK6ruiKBjpfGyOCbqM7i_v9k8OqWJBaa7nSVOlLbNQwq5eSY6_VIg5YiDku";
+        const REVIEW_WEBHOOK_URL = "https://discord.com/api/webhooks/1548956538721275917/54yllaZFvcI0rl0hWrQU42AKB0Ivkm857jdY8u7xiYu1u0fTDYhFp6AUXQW1e3ib9h5f";
+        const ADMIN_PASSWORD = "1234"; // الرمز السري للأدمن
+
+        // إدارة البيانات والعدادات المحفوظة
+        let visits = parseInt(localStorage.getItem('pds_visits') || 0) + 1;
+        let orders = parseInt(localStorage.getItem('pds_orders') || 0);
+        let reviews = parseInt(localStorage.getItem('pds_reviews') || 0);
+        let credits = parseInt(localStorage.getItem('pds_credits') || 0);
+
+        localStorage.setItem('pds_visits', visits);
+
+        function updateAdminStatsUI() {
+            document.getElementById('visitCount').innerText = visits;
+            document.getElementById('orderCount').innerText = orders;
+            document.getElementById('reviewCount').innerText = reviews;
+            document.getElementById('creditsCount').innerText = credits.toLocaleString();
+        }
+
+        // تسجيل دخول الأدمن
+        function openAdminModal() {
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        function verifyAdmin() {
+            const inputPass = document.getElementById('adminPasswordInput').value;
+            if (inputPass === ADMIN_PASSWORD) {
+                closeAdminModal();
+                updateAdminStatsUI();
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("كلمة السر غير صحيحة!");
+            }
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function updateCredits() {
+            const val = document.getElementById('newCreditInput').value;
+            if(val !== '') {
+                credits = parseInt(val);
+                localStorage.setItem('pds_credits', credits);
+                updateAdminStatsUI();
+                alert("تم تحديث كمية الكردت بنجاح!");
+                document.getElementById('newCreditInput').value = '';
+            }
+        }
+
+        // اختيار الخدمة
+        function selectService(serviceName) {
+            document.getElementById('orderService').value = serviceName;
+            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // التقييم بالنجوم
+        let selectedRating = 0;
+        const stars = document.querySelectorAll('#starContainer i');
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = star.getAttribute('data-value');
+                updateStars(selectedRating);
+            });
+        });
+
+        function updateStars(rating) {
+            stars.forEach(star => {
+                if (star.getAttribute('data-value') <= rating) {
+                    star.classList.remove('fa-regular');
+                    star.classList.add('fa-solid');
+                } else {
+                    star.classList.remove('fa-solid');
+                    star.classList.add('fa-regular');
+                }
+            });
+        }
+
+        // إرسال الطلب وزيادة عداد الطلبات
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusDiv = document.getElementById('orderStatus');
+            const name = document.getElementById('orderName').value;
+            const service = document.getElementById('orderService').value;
+            const details = document.getElementById('orderDetails').value;
+
+            const payload = {
+                embeds: [{
+                    title: "🛒 طلب خدمة جديد - Pro Dev Store",
+                    color: 16498468,
+                    fields: [
+                        { name: "👤 العميل", value: name, inline: true },
+                        { name: "🛠️ الخدمة", value: service, inline: true },
+                        { name: "📝 التفاصيل", value: details }
+                    ],
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                const response = await fetch(ORDER_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    orders++;
+                    localStorage.setItem('pds_orders', orders);
+                    showStatus(statusDiv, 'تم إرسال طلبك بنجاح! سنتواصل معك قريباً.', 'success');
+                    document.getElementById('orderForm').reset();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                showStatus(statusDiv, 'حدث خطأ أثناء إرسال الطلب، يُرجى المحاولة لاحقاً.', 'error');
+            }
+        });
+
+        // إرسال التقييم وزيادة عداد التقييمات
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusDiv = document.getElementById('reviewStatus');
+            const name = document.getElementById('reviewName').value;
+            const comment = document.getElementById('reviewComment').value;
+
+            if (selectedRating === 0) {
+                showStatus(statusDiv, 'يرجى تحديد عدد النجوم للتقييم.', 'error');
+                return;
+            }
+
+            const starsText = "⭐".repeat(selectedRating);
+
+            const payload = {
+                embeds: [{
+                    title: "💬 ملاحظة / تقييم جديد!",
+                    color: 16498468,
+                    fields: [
+                        { name: "👤 العميل", value: name, inline: true },
+                        { name: "⭐ التقييم", value: `${starsText} (${selectedRating}/5)`, inline: true },
+                        { name: "💬 الملاحظات", value: comment }
+                    ],
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                const response = await fetch(REVIEW_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    reviews++;
+                    localStorage.setItem('pds_reviews', reviews);
+                    showStatus(statusDiv, 'شكراً لك! تم إرسال تقييمك وملاحظاتك بنجاح.', 'success');
+                    document.getElementById('reviewForm').reset();
+                    selectedRating = 0;
+                    updateStars(0);
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                showStatus(statusDiv, 'حدث خطأ أثناء إرسال التقييم، يُرجى المحاولة لاحقاً.', 'error');
+            }
+        });
+
+        function showStatus(element, text, type) {
+            element.innerText = text;
+            element.className = `alert alert-${type}`;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
