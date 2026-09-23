@@ -1,1 +1,747 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pro Dev Store | برو ديف ستور</title>
+    <!-- استدعاء خطوط عربية فاخرة وأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600;800&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0908;
+            --card-bg: #14110d;
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-bronze: #8c6d3f;
+            --glow-gold: rgba(212, 175, 55, 0.35);
+            --text-light: #f4efa8;
+            --text-sub: #b3a998;
+            --danger-color: #e74c3c;
+            --border-gold: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(140, 109, 63, 0.05) 0%, transparent 60%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        /* زر الأدمن العلوي */
+        .admin-top-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1002;
+            background: rgba(20, 17, 13, 0.9);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .admin-top-btn:hover, .admin-top-btn.active {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--glow-gold);
+        }
+
+        /* الهيدر والعنوان */
+        header {
+            width: 100%;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, #18140f 0%, var(--bg-dark) 100%);
+            border-bottom: 2px solid var(--gold-primary);
+            box-shadow: 0 5px 25px var(--glow-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-right: 140px;
+            letter-spacing: 1px;
+        }
+
+        .logo-title span {
+            color: var(--gold-primary);
+            text-shadow: 0 0 12px var(--glow-gold);
+        }
+
+        /* حاوية النقاط الثلاث والإصلاح الخاص بالقائمة */
+        .dots-menu-container {
+            position: relative;
+            display: inline-block;
+            z-index: 1005;
+        }
+
+        .dots-btn {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .dots-btn:hover, .dots-btn.active {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--glow-gold);
+        }
+
+        /* القائمة المنسدلة المعدلة */
+        .dropdown-menu {
+            position: absolute;
+            left: 0;
+            top: 55px;
+            background: #120f0b;
+            border: 1px solid var(--gold-primary);
+            border-radius: 12px;
+            width: 220px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.95), 0 0 20px var(--glow-gold);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999; /* لضمان أسبقية الظهور على بقية العناصر */
+        }
+
+        .dropdown-menu.show { 
+            display: flex !important; 
+        }
+
+        .dropdown-item {
+            color: var(--text-light);
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 14px 18px;
+            font-weight: 700;
+            font-size: 0.98rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-align: right;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+
+        .dropdown-item i {
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover, .dropdown-item.active-tab {
+            background: var(--gold-primary);
+            color: #000;
+        }
+
+        .dropdown-item:hover i, .dropdown-item.active-tab i {
+            color: #000;
+        }
+
+        /* الحاوية الرئيسية والبطاقات */
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin-top: 35px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border: var(--border-gold);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.03);
+            position: relative;
+            display: none;
+        }
+
+        .section-card.show { display: block; }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold-primary), transparent);
+        }
+
+        .section-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: var(--border-gold);
+            padding-bottom: 12px;
+        }
+
+        .welcome-box {
+            color: var(--text-sub);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px dashed rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        /* شبكة الخدمات */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        .service-card {
+            background: #0d0b08;
+            border: var(--border-gold);
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9), 0 0 15px var(--glow-gold);
+        }
+
+        .service-card i.card-icon {
+            font-size: 2.8rem;
+            color: var(--gold-primary);
+        }
+
+        .service-title { font-size: 1.3rem; font-weight: 800; color: #fff; }
+        .service-desc { font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; }
+
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .delete-btn:hover { background: var(--danger-color); color: #fff; }
+
+        /* النافذة المنبثقة */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--gold-primary);
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 25px var(--glow-gold);
+        }
+
+        .modal-card h3 { color: var(--gold-primary); margin-bottom: 10px; font-family: 'Reem Kufi', sans-serif; font-size: 1.5rem; }
+        .modal-card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 20px; }
+
+        /* لوحة التحكم والإحصائيات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #0d0b08;
+            border: var(--border-gold);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info h3 { font-size: 1.6rem; color: #fff; }
+        .stat-info p { font-size: 0.85rem; color: var(--text-sub); }
+
+        /* النماذج والإدخال */
+        .order-form { display: flex; flex-direction: column; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; text-align: right; }
+        .form-group label { font-weight: 700; color: var(--gold-light); }
+
+        .form-input {
+            width: 100%;
+            background: #080705;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 12px var(--glow-gold);
+        }
+
+        textarea.form-input { resize: vertical; min-height: 100px; }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-bronze));
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 20px var(--glow-gold);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .logo-title { margin-right: 0; font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر الأدمن الثابت أعلى اليمين -->
+    <button class="admin-top-btn" id="adminTopBtn" onclick="handleAdminClick()">
+        <i class="fa-solid fa-crown"></i> لوحة الإدارة
+    </button>
+
+    <header>
+        <div class="logo-title">Pro Dev <span>Store</span></div>
+        
+        <div class="dots-menu-container">
+            <button class="dots-btn" id="dotsMenuBtn" onclick="toggleMenu(event)" type="button">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <button class="dropdown-item active-tab" onclick="showSection('home', this)"><i class="fa-solid fa-landmark"></i> الرئيسية</button>
+                <button class="dropdown-item" onclick="showSection('services', this)"><i class="fa-solid fa-scroll"></i> الخدمات والمنتجات</button>
+                <button class="dropdown-item" onclick="showSection('order', this)"><i class="fa-solid fa-cart-flatbed"></i> تقديم طلب</button>
+                <button class="dropdown-item" onclick="showSection('feedback', this)"><i class="fa-solid fa-feather-pointed"></i> الملاحظات والآراء</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- قسم لوحة الإدارة -->
+        <div class="section-card" id="adminPanel">
+            <h2 class="section-title"><i class="fa-solid fa-crown"></i> لوحة التحكم والإدارة</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div class="stat-info">
+                        <h3 id="visitorsCount">0</h3>
+                        <p>عدد الزائرين</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-box-archive"></i></div>
+                    <div class="stat-info">
+                        <h3 id="ordersCount">0</h3>
+                        <p>عدد الطلبات</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-comments"></i></div>
+                    <div class="stat-info">
+                        <h3 id="notesCount">0</h3>
+                        <p>عدد الملاحظات</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--gold-primary); margin-bottom: 15px;"><i class="fa-solid fa-plus-circle"></i> إضافة خدمة جديدة:</h3>
+            <form class="order-form" onsubmit="addService(event)">
+                <div class="form-group">
+                    <label>عنوان الخدمة:</label>
+                    <input type="text" id="newServiceTitle" class="form-input" placeholder="مثال: متجر إلكتروني فاخر" required>
+                </div>
+                <div class="form-group">
+                    <label>وصف الخدمة:</label>
+                    <textarea id="newServiceDesc" class="form-input" placeholder="اكتب تفاصيل الخدمة..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>أيقونة الخدمة (FontAwesome Class):</label>
+                    <input type="text" id="newServiceIcon" class="form-input" placeholder="مثال: fa-solid fa-code" value="fa-solid fa-code">
+                </div>
+                <button type="submit" class="btn-submit"><i class="fa-solid fa-check"></i> نشر الخدمة الآن</button>
+            </form>
+        </div>
+
+        <!-- القسم الرئيسي -->
+        <div class="section-card show" id="home">
+            <h2 class="section-title"><i class="fa-solid fa-landmark"></i> مرحباً بك في صرحنا البرمجي</h2>
+            <div class="welcome-box">
+                أهلاً بك في متجر <b>Pro Dev Store</b>! نقدم لك أرقى الخدمات البرمجية، تطوير المواقع الفاخرة، وبوتات الديسكورد بأعلى درجات الإتقان والأصالة.
+            </div>
+        </div>
+
+        <!-- قسم الخدمات والمنتجات -->
+        <div class="section-card" id="services">
+            <h2 class="section-title"><i class="fa-solid fa-scroll"></i> الخدمات والمنتجات</h2>
+            <div class="grid-cards" id="servicesList">
+                <!-- تحميل الخدمات تلقائياً -->
+            </div>
+        </div>
+
+        <!-- قسم تقديم طلب -->
+        <div class="section-card" id="order">
+            <h2 class="section-title"><i class="fa-solid fa-cart-flatbed"></i> تقديم طلب جديد</h2>
+            <form class="order-form" onsubmit="sendOrderToDiscord(event)">
+                <div class="form-group">
+                    <label>اسمك / يوزر الديسكورد:</label>
+                    <input type="text" id="clientName" class="form-input" placeholder="مثال: @eisa" required>
+                </div>
+                <div class="form-group">
+                    <label>نوع الخدمة المطلوبة:</label>
+                    <input type="text" id="serviceType" class="form-input" placeholder="مثال: برمجة موقع / بوت ديسكورد" required>
+                </div>
+                <div class="form-group">
+                    <label>تفاصيل الطلب:</label>
+                    <textarea id="orderDetails" class="form-input" placeholder="اكتب التفاصيل والمواصفات التي تحتاجها..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit"><i class="fa-brands fa-discord"></i> إرسال الطلب عبر الديسكورد</button>
+            </form>
+        </div>
+
+        <!-- قسم الملاحظات والآراء -->
+        <div class="section-card" id="feedback">
+            <h2 class="section-title"><i class="fa-solid fa-feather-pointed"></i> إرسال ملاحظة أو استفسار</h2>
+            <form class="order-form" onsubmit="sendFeedbackToDiscord(event)">
+                <div class="form-group">
+                    <label>الاسم / اليوزر:</label>
+                    <input type="text" id="fbName" class="form-input" placeholder="اسمك هنا..." required>
+                </div>
+                <div class="form-group">
+                    <label>الملاحظة أو الرأي:</label>
+                    <textarea id="fbText" class="form-input" placeholder="اكتب ملاحظتك هنا..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> إرسال الملاحظة</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- نافذة إدخال كلمة سر الأدمن -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3><i class="fa-solid fa-lock"></i> لوحة الإدارة</h3>
+            <p>أدخل كلمة السر للوصول إلى التحكم:</p>
+            <input type="password" id="adminPasswordInput" class="form-input" placeholder="كلمة السر..." style="text-align: center; margin-bottom: 20px;">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-submit" onclick="verifyPassword()" style="flex: 1;"><i class="fa-solid fa-key"></i> دخول</button>
+                <button class="btn-submit" onclick="closeModal()" style="flex: 1; background: #222; color: #fff;">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1534515770090848317/gxlsuhG36eN4GaWwPJTqf2eHELvJ9geJ0QcwA2v000haDWLtJA4rBwjfFcoLt9A-xdgc";
+        const ADMIN_PASS = "1234";
+
+        let isAdminLoggedIn = false;
+
+        let visitors = parseInt(localStorage.getItem('prodev_visitors') || '0') + 1;
+        localStorage.setItem('prodev_visitors', visitors);
+
+        let ordersCount = parseInt(localStorage.getItem('prodev_orders') || '0');
+        let notesCount = parseInt(localStorage.getItem('prodev_notes') || '0');
+
+        let defaultServices = [
+            { id: 1, title: "برمجة مواقـع فاخرة", desc: "تطوير مواقـع تعريفية ومتاجر متجاوبة وسريعة بتصميم ملكي.", icon: "fa-solid fa-globe" },
+            { id: 2, title: "بوتات ديسكورد احترافية", desc: "صناعة وتطوير بوتات ديسكورد مخصصة بالكامل حسب الطلب.", icon: "fa-brands fa-discord" },
+            { id: 3, title: "تصميم واجهات UI/UX", desc: "تصميم واجهات مستخدم مذهبة ومتناسقة تناسب جميع الأجهزة.", icon: "fa-solid fa-wand-magic-sparkles" }
+        ];
+
+        let services = JSON.parse(localStorage.getItem('prodev_services')) || defaultServices;
+
+        // دالة تحكم بالفتح والإغلاق المباشر للقائمة المنسدلة
+        function toggleMenu(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('dropdownMenu');
+            const btn = document.getElementById('dotsMenuBtn');
+            dropdown.classList.toggle('show');
+            btn.classList.toggle('active');
+        }
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const btn = document.getElementById('dotsMenuBtn');
+            if (dropdown && !dropdown.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+                dropdown.classList.remove('show');
+                btn.classList.remove('active');
+            }
+        });
+
+        function handleAdminClick() {
+            if (isAdminLoggedIn) {
+                showSection('adminPanel');
+            } else {
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('adminPasswordInput').focus();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function verifyPassword() {
+            const input = document.getElementById('adminPasswordInput').value;
+            if (input === ADMIN_PASS) {
+                isAdminLoggedIn = true;
+                closeModal();
+                document.getElementById('adminTopBtn').classList.add('active');
+                updateStats();
+                renderServices();
+                showSection('adminPanel');
+            } else {
+                alert("كلمة السر غير صحيحة!");
+            }
+        }
+
+        function showSection(sectionId, btn) {
+            const sections = document.querySelectorAll('.section-card');
+            sections.forEach(sec => sec.classList.remove('show'));
+
+            document.getElementById(sectionId).classList.add('show');
+
+            const buttons = document.querySelectorAll('.dropdown-item');
+            buttons.forEach(b => b.classList.remove('active-tab'));
+            if (btn) btn.classList.add('active-tab');
+
+            document.getElementById('dropdownMenu').classList.remove('show');
+            document.getElementById('dotsMenuBtn').classList.remove('active');
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesList');
+            container.innerHTML = '';
+            services.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    ${isAdminLoggedIn ? `<button class="delete-btn" onclick="deleteService(${s.id})" title="حذف الخدمة"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    <i class="${s.icon} card-icon"></i>
+                    <div class="service-title">${s.title}</div>
+                    <div class="service-desc">${s.desc}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('visitorsCount').innerText = visitors;
+            document.getElementById('ordersCount').innerText = ordersCount;
+            document.getElementById('notesCount').innerText = notesCount;
+        }
+
+        function addService(e) {
+            e.preventDefault();
+            const title = document.getElementById('newServiceTitle').value.trim();
+            const desc = document.getElementById('newServiceDesc').value.trim();
+            const icon = document.getElementById('newServiceIcon').value.trim() || 'fa-solid fa-code';
+
+            const newService = { id: Date.now(), title, desc, icon };
+            services.push(newService);
+            localStorage.setItem('prodev_services', JSON.stringify(services));
+
+            document.getElementById('newServiceTitle').value = '';
+            document.getElementById('newServiceDesc').value = '';
+
+            renderServices();
+            alert("تمت إضافة الخدمة بنجاح!");
+        }
+
+        function deleteService(id) {
+            if (confirm("هل أنت تأكد من حذف هذه الخدمة؟")) {
+                services = services.filter(s => s.id !== id);
+                localStorage.setItem('prodev_services', JSON.stringify(services));
+                renderServices();
+            }
+        }
+
+        async function sendOrderToDiscord(e) {
+            e.preventDefault();
+            const name = document.getElementById('clientName').value.trim();
+            const service = document.getElementById('serviceType').value.trim();
+            const details = document.getElementById('orderDetails').value.trim();
+
+            try {
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: "طلبات Pro Dev Store",
+                        embeds: [{
+                            title: "🛒 طلب خدمة جديد",
+                            fields: [
+                                { name: "العميل:", value: name, inline: true },
+                                { name: "الخدمة:", value: service, inline: true },
+                                { name: "التفاصيل:", value: details }
+                            ],
+                            color: 13938487,
+                            footer: { text: "Pro Dev Store - الوقت: " + new Date().toLocaleString('ar-EG') }
+                        }]
+                    })
+                });
+
+                if (response.ok || response.status === 204) {
+                    ordersCount++;
+                    localStorage.setItem('prodev_orders', ordersCount);
+                    alert("تم إرسال طلبك بنجاح إلى الديسكورد!");
+                    document.querySelector('#order .order-form').reset();
+                } else {
+                    alert("حدث خطأ أثناء إرسال الطلب.");
+                }
+            } catch (err) {
+                alert("تعذر الاتصال بالديسكورد.");
+            }
+        }
+
+        async function sendFeedbackToDiscord(e) {
+            e.preventDefault();
+            const name = document.getElementById('fbName').value.trim();
+            const text = document.getElementById('fbText').value.trim();
+
+            try {
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: "ملاحظات Pro Dev Store",
+                        embeds: [{
+                            title: "💬 ملاحظة أو استفسار جديد",
+                            fields: [
+                                { name: "من:", value: name, inline: true },
+                                { name: "الملاحظة:", value: text }
+                            ],
+                            color: 13938487,
+                            footer: { text: "Pro Dev Store - الوقت: " + new Date().toLocaleString('ar-EG') }
+                        }]
+                    })
+                });
+
+                if (response.ok || response.status === 204) {
+                    notesCount++;
+                    localStorage.setItem('prodev_notes', notesCount);
+                    alert("تم إرسال ملاحظتك بنجاح!");
+                    document.querySelector('#feedback .order-form').reset();
+                } else {
+                    alert("حدث خطأ أثناء الإرسال.");
+                }
+            } catch (err) {
+                alert("تعذر الاتصال بالديسكورد.");
+            }
+        }
+
+        renderServices();
+    </script>
+</body>
+</html>
